@@ -94,6 +94,9 @@ const ITI_MIN = 500;
 const ITI_MAX = 1000;
 const RESPONSE_TIMEOUT = 2000; // 超过这个时间没反应就记为timeout
 
+// ---- Google Sheets 数据接收端点 ----
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1cOk9QztK90p_tKmtX_lpnKsKybQQs3WeJPvwbasAlF3jXa1ybGL6gWxcbqwL2jdd5g/exec";
+
 // ---- 跳转回 Qualtrics 的设置 ----
 // 完成后会跳转到这个网址，并把 session code 当作 URL 参数带回去
 // 你需要把这个换成你 Qualtrics 问卷里"continue from external task"那一页的网址
