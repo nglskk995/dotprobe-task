@@ -18,7 +18,14 @@ function generateSessionCode() {
     Math.random().toString(36).substring(2, 8)
   ).toUpperCase();
 }
-const SESSION_CODE = generateSessionCode();
+// 优先从网址里读取 Qualtrics 传过来的 session_code（即 Qualtrics 的 ResponseID）
+// 如果网址里没有这个参数（比如你自己直接打开网址测试），就退回自动生成一个，方便自测
+function getSessionCodeFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("session_code");
+}
+
+const SESSION_CODE = getSessionCodeFromURL() || generateSessionCode();
 
 // 把单个 trial 的数据发送到 Google Sheets
 // 用 no-cors 模式，因为 Apps Script 的网页应用不支持标准 CORS 响应读取，
@@ -213,9 +220,10 @@ function buildJsPsychTrial(trialData, isPractice) {
           probe_side: trialData.probeSide,
           left_img: trialData.leftImg,
           right_img: trialData.rightImg,
-          response: data.response,
-          correct: data.correct,
-          rt: data.rt,
+          response: data.response === null ? "NO_RESPONSE" : data.response,
+          // 显式转成字符串 "TRUE"/"FALSE"，避免 false 这个布尔值在传输/写入过程中被误判为空值
+          correct: data.correct ? "TRUE" : "FALSE",
+          rt: data.rt === null ? "TIMEOUT" : data.rt,
         });
       }
     },
