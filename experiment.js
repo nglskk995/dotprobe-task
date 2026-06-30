@@ -274,6 +274,9 @@ full_timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="max-width:700px; margin:0 auto; text-align:left;">
+      <div style="background:#f0f0f0; padding:8px; font-size:12px; color:#666; margin-bottom:10px;">
+        [DEBUG] Raw session_code received: "${SESSION_CODE}"
+      </div>
       <h2>Visual Task Instructions</h2>
       <p>In this task, you will see two images appear briefly on the screen, one on the left and one on the right.</p>
       <p>After the images disappear, a small asterisk (*) will appear where one of the images was.</p>
