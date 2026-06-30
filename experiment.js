@@ -206,7 +206,16 @@ function buildJsPsychTrial(trialData, isPractice) {
     },
     on_finish: function (data) {
       const correctKey = trialData.probeSide === "left" ? "a" : "d";
-      data.correct = data.response === correctKey;
+      // 区分三种情况：正确 / 错误 / 超时未反应，不要把"没按"和"按错了"混在一起算成同一种 FALSE
+      let correctLabel;
+      if (data.response === null) {
+        correctLabel = "TIMEOUT";
+      } else if (data.response === correctKey) {
+        correctLabel = "TRUE";
+      } else {
+        correctLabel = "FALSE";
+      }
+      data.correct = correctLabel;
       data.session_code = SESSION_CODE;
 
       // 只把正式 trial 的数据发送到 Google Sheet，练习 trial 不计入
@@ -221,8 +230,7 @@ function buildJsPsychTrial(trialData, isPractice) {
           left_img: trialData.leftImg,
           right_img: trialData.rightImg,
           response: data.response === null ? "NO_RESPONSE" : data.response,
-          // 显式转成字符串 "TRUE"/"FALSE"，避免 false 这个布尔值在传输/写入过程中被误判为空值
-          correct: data.correct ? "TRUE" : "FALSE",
+          correct: correctLabel,
           rt: data.rt === null ? "TIMEOUT" : data.rt,
         });
       }
