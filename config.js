@@ -4,7 +4,7 @@
 // 如果你的文件夹结构不同，修改下面 IMG_PATH
 // ============================================================
 
-const IMG_PATH = "images/";
+const IMG_PATH = "oasis/";
 
 // ---- 威胁图片：社会性威胁 (Angry face) ----
 const SOCIAL_THREAT_IMAGES = [
