@@ -172,7 +172,7 @@ function buildJsPsychTrial(trialData, isPractice) {
           }</div>
         </div>`;
     },
-    choices: ["e", "i"], // E = 左边探测点, I = 右边探测点
+    choices: ["a", "d"], // A = 左边探测点, D = 右边探测点
     trial_duration: RESPONSE_TIMEOUT,
     data: {
       task: isPractice ? "practice" : "dotprobe",
@@ -184,7 +184,7 @@ function buildJsPsychTrial(trialData, isPractice) {
       right_img: trialData.rightImg,
     },
     on_finish: function (data) {
-      const correctKey = trialData.probeSide === "left" ? "e" : "i";
+      const correctKey = trialData.probeSide === "left" ? "a" : "d";
       data.correct = data.response === correctKey;
       data.session_code = SESSION_CODE;
     },
@@ -231,9 +231,13 @@ full_timeline.push({
       <p>In this task, you will see two images appear briefly on the screen, one on the left and one on the right.</p>
       <p>After the images disappear, a small asterisk (*) will appear where one of the images was.</p>
       <p>Your job is to indicate <b>which side</b> the asterisk appeared on, as quickly and accurately as possible:</p>
-      <p style="font-size:24px; text-align:center;"><b>Press "E"</b> if the asterisk is on the <b>LEFT</b><br>
-      <b>Press "I"</b> if the asterisk is on the <b>RIGHT</b></p>
-      <p>Please keep your fingers resting on the E and I keys throughout the task.</p>
+      <p style="font-size:24px; text-align:center;"><b>Press "A"</b> if the asterisk is on the <b>LEFT</b><br>
+      <b>Press "D"</b> if the asterisk is on the <b>RIGHT</b></p>
+      <p>Please keep your left index finger on "A" and your right index finger on "D" throughout the task.</p>
+      <div style="background-color:#fff3cd; border:2px solid #ffc107; border-radius:6px; padding:12px 16px; margin:16px 0;">
+        <b>Important:</b> Your response should be based ONLY on the position of the asterisk (*).
+        The images themselves do not require any response — just respond to where the asterisk appears.
+      </div>
       <p>We will start with a few practice trials so you can get used to the task.</p>
       <p style="text-align:center;">Press any key to begin practice.</p>
     </div>`,
@@ -259,7 +263,10 @@ full_timeline.push({
     <div style="max-width:600px; margin:0 auto;">
       <h3>Practice complete!</h3>
       <p>The real task will now begin. Remember:</p>
-      <p><b>E</b> = asterisk on the LEFT &nbsp;&nbsp;&nbsp; <b>I</b> = asterisk on the RIGHT</p>
+      <p><b>A</b> = asterisk on the LEFT &nbsp;&nbsp;&nbsp; <b>D</b> = asterisk on the RIGHT</p>
+      <div style="background-color:#fff3cd; border:2px solid #ffc107; border-radius:6px; padding:10px 14px; margin:14px 0;">
+        Respond only to the <b>position of the asterisk (*)</b>, not the images.
+      </div>
       <p>Please respond as quickly and accurately as you can.</p>
       <p style="text-align:center;">Press any key to start.</p>
     </div>`,
