@@ -100,4 +100,4 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1cOk9QztK90
 // ---- 跳转回 Qualtrics 的设置 ----
 // 完成后会跳转到这个网址，并把 session code 当作 URL 参数带回去
 // 你需要把这个换成你 Qualtrics 问卷里"continue from external task"那一页的网址
-const QUALTRICS_RETURN_URL = "https://your-institution.qualtrics.com/jfe/form/YOUR_SURVEY_ID";
+const QUALTRICS_RETURN_URL = "https://ubc.ca1.qualtrics.com/jfe/form/SV_bqGFS8VA86vXIrk";
