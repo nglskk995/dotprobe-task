@@ -20,6 +20,20 @@ function generateSessionCode() {
 }
 const SESSION_CODE = generateSessionCode();
 
+// 把单个 trial 的数据发送到 Google Sheets
+// 用 no-cors 模式，因为 Apps Script 的网页应用不支持标准 CORS 响应读取，
+// 但 no-cors 模式下数据依然能成功写入表格，只是我们读不到返回内容（这里不需要读）
+function sendDataToSheet(dataRow) {
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dataRow),
+  }).catch(function (err) {
+    console.error("Failed to send data to Google Sheet:", err);
+  });
+}
+
 // 工具函数：从数组里随机不重复抽取 n 个元素（如果 n 大于数组长度，允许重复抽取并打乱）
 function sampleWithRepeat(array, n) {
   const result = [];
@@ -187,6 +201,23 @@ function buildJsPsychTrial(trialData, isPractice) {
       const correctKey = trialData.probeSide === "left" ? "a" : "d";
       data.correct = data.response === correctKey;
       data.session_code = SESSION_CODE;
+
+      // 只把正式 trial 的数据发送到 Google Sheet，练习 trial 不计入
+      if (!isPractice) {
+        sendDataToSheet({
+          session_code: SESSION_CODE,
+          timestamp: new Date().toISOString(),
+          condition: trialData.condition,
+          congruency: trialData.congruency,
+          threat_side: trialData.threatSide || "NA",
+          probe_side: trialData.probeSide,
+          left_img: trialData.leftImg,
+          right_img: trialData.rightImg,
+          response: data.response,
+          correct: data.correct,
+          rt: data.rt,
+        });
+      }
     },
   });
 
